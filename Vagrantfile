@@ -22,6 +22,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   provision_environments = true
 
+  # Comment out this next line or set the variable to false if you don't want
+  # to automatically take snapshots as the VMs are provisions. Requires
+  # plugins vagrant-host-shell and vagrant-vbox-snapshot. Only works with
+  # the Virtual Box provider.
+
+  take_snapshots = true
+
   # Master config
 
   config.vm.define "master", primary: true do |master|
@@ -35,9 +42,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.provision "shell", path: "bin/provision.sh"
     master.vm.provision "shell", path: "bin/pe_master_provision.sh"
     master.vm.provision "puppet", manifest_file: "default.pp"
-      if provision_environments
-        master.vm.provision "puppet", manifest_file: "master_provision_environments.pp"
+    if provision_environments
+      master.vm.provision "puppet", manifest_file: "master_provision_environments.pp"
+    end
+    if take_snapshots
+      master.vm.provision :host_shell do |host_shell|
+        host_shell.inline = "vagrant snapshot take master post-provision"
       end
+    end
   end
 
   # Agent config
@@ -51,9 +63,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     agent1.vm.provision "shell", path: "bin/provision.sh"
     agent1.vm.provision "shell", path: "bin/pe_agent_provision.sh"
     agent1.vm.provision "puppet", manifest_file: "default.pp"
-      if provision_environments
-        agent1.vm.provision "puppet", manifest_file: "agent_provision_environments.pp"
+    if provision_environments
+      agent1.vm.provision "puppet", manifest_file: "agent_provision_environments.pp"
+    end
+    if take_snapshots
+      agent1.vm.provision :host_shell do |host_shell|
+        host_shell.inline = "vagrant snapshot take agent1 post-provision"
       end
+      agent1.vm.provision :host_shell do |host_shell|
+        host_shell.inline = "vagrant snapshot take master agent1-cert-signed"
+      end
+    end
   end
 
   # Create a forwarded port mapping which allows access to a specific port
