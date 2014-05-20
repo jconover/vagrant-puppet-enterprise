@@ -1,0 +1,2 @@
+sudo su -c "/opt/puppet/bin/ruby /vagrant/git/linux-puppet.git/hooks/puppetlabs-dynamic.environments.rb"
+sudo chown -R pe-puppet:pe-puppet /etc/puppetlabs/puppet/environments

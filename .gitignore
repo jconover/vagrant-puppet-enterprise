@@ -1,0 +1,14 @@
+# ignore vi swap files
+*.swp
+
+# ignore tarballs
+*.gz
+*.tgz
+
+# ignore Vagrant boxes
+*.box
+
+# ignore .vagrant
+.vagrant/
+
+git

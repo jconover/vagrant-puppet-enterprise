@@ -1,0 +1,10 @@
+#### Hosts to append for Vagrant setup
+192.168.77.1  host host.localdomain
+192.168.77.2  master master.localdomain puppet puppet.localdomain
+192.168.77.3  agent1 agent1.localdomain
+192.168.77.4  agent2 agent2.localdomain
+192.168.77.5  agent3 agent3.localdomain
+192.168.77.6  agent4 agent4.localdomain
+192.168.77.7  agent5 agent5.localdomain
+192.168.77.8  test test.localdomain
+
