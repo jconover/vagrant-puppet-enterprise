@@ -1,4 +1,3 @@
-
 ## site.pp ##
 
 # This file (/etc/puppetlabs/puppet/manifests/site.pp) is the main entry point
@@ -19,8 +18,8 @@
 
 # Define filebucket 'main':
 filebucket { 'main':
-  server => 'puppet.localdomain',
-  path   => false,
+    server => 'puppet',
+      path => false,
 }
 
 # Make filebucket 'main' the default backup location for all File resources:
@@ -36,6 +35,10 @@ File { backup => 'main' }
 # will be included in every node's catalog, *in addition* to any classes
 # specified in the console for that node.
 
-node default {
-  include packages
-}
+node default { } 
+
+#
+# Import additional manifests
+#
+# import "nodes"
+

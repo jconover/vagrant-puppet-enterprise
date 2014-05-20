@@ -17,6 +17,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.box_url = "https://dl.dropboxusercontent.com/s/no7mqxvxx211dgb/centos65.box?dl=1"
   config.vm.box_url = "richburroughs/centos65"
 
+  # Comment out this next line or set the variable to false if you don't want
+  # the master to be set up  automatically to do dynamic environments
+
+  provision_environments = true
+
+  # Master config
+
   config.vm.define "master", primary: true do |master|
     master.vm.provider "virtualbox" do |v|
       v.memory = 2048
@@ -28,8 +35,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.provision "shell", path: "bin/provision.sh"
     master.vm.provision "shell", path: "bin/pe_master_provision.sh"
     master.vm.provision "puppet", manifest_file: "default.pp"
-    master.vm.provision "puppet", manifest_file: "git_provision.pp"
+      if provision_environments
+        master.vm.provision "puppet", manifest_file: "master_provision_environments.pp"
+      end
   end
+
+  # Agent config
 
   config.vm.define "agent1" do |agent1|
     agent1.vm.provider "virtualbox" do |v|
@@ -39,7 +50,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     agent1.vm.hostname = "agent1"
     agent1.vm.provision "shell", path: "bin/provision.sh"
     agent1.vm.provision "shell", path: "bin/pe_agent_provision.sh"
-    agent1.vm.provision "puppet"
+    agent1.vm.provision "puppet", manifest_file: "default.pp"
+      if provision_environments
+        agent1.vm.provision "puppet", manifest_file: "agent_provision_environments.pp"
+      end
   end
 
   # Create a forwarded port mapping which allows access to a specific port

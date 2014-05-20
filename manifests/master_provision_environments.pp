@@ -28,7 +28,11 @@ file { 'puppetlabs-dynamic.environments.rb':
   require => File['post-receive'],
 }
 
-file { '/etc/puppetlabs/puppet/environments':
+$basedir = '/etc/puppetlabs/puppet'
+
+file { [ "${basedir}/environments", "${basedir}/environments/production",
+          "${basedir}/environments/production/manifests",
+          "${basedir}/environments/production/modules" ]:
   ensure  => directory,
   owner   => 'pe-puppet',
   group   => 'pe-puppet',
@@ -44,6 +48,14 @@ file { '/etc/puppetlabs/puppet/puppet.conf':
   require => File['/etc/puppetlabs/puppet/environments'],
 }
 
+file { '/etc/puppetlabs/puppet/environments/production/manifests/site.pp':
+  ensure  => present,
+  source  => 'file:///vagrant/manifests/site.pp',
+  owner   => 'pe-puppet',
+  group   => 'pe-puppet',
+  require => File['/etc/puppetlabs/puppet/environments'],
+}
+
 exec { '/sbin/service pe-httpd restart':
-  require => File['/etc/puppetlabs/puppet/puppet.conf'],
+  require => File['/etc/puppetlabs/puppet/environments/production/manifests/site.pp'],
 }
