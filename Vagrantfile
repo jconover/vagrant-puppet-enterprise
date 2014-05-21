@@ -15,7 +15,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   # config.vm.box_url = "https://dl.dropboxusercontent.com/s/no7mqxvxx211dgb/centos65.box?dl=1"
-  config.vm.box_url = "richburroughs/centos65"
 
   # Comment out this next line or set the variable to false if you don't want
   # the master to be set up  automatically to do dynamic environments
