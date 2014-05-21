@@ -10,11 +10,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "richburroughs/centos65"
+  config.vm.box = "richburroughs/centos64"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  # config.vm.box_url = "https://dl.dropboxusercontent.com/s/no7mqxvxx211dgb/centos65.box?dl=1"
+  # config.vm.box_url = "https://dl.dropboxusercontent.com/s/offzktx597unoyh/centos64.box?dl=1"
 
   # Comment out this next line or set the variable to false if you don't want
   # the master to be set up  automatically to do dynamic environments
