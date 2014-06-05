@@ -8,7 +8,7 @@ ENVIRONMENT_BASEDIR = "/etc/puppetlabs/puppet/environments"
 # clone from a non-local repository, set this to the URL of the repository,
 # such as git@git.host:puppet.git
 #SOURCE_REPOSITORY = File.expand_path(ENV['GIT_DIR'])
-SOURCE_REPOSITORY = "/vagrant/git/linux-puppet.git/"
+SOURCE_REPOSITORY = "/site/git/linux-puppet.git/"
 
 # The git_dir environment variable will override the --git-dir, so we remove it
 # to allow us to create new repositories cleanly.

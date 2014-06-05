@@ -6,23 +6,27 @@ package { 'git':
   ensure => present,
 }
 
-exec { '/bin/rm -rf /vagrant/git/linux-puppet.git/':
-  require => Package['git'],
+file { ['/site', '/site/git']:
+  ensure => directory,
+  owner  => 'vagrant',
+  group  => 'vagrant',
 }
 
-exec { '/usr/bin/git init --bare /vagrant/git/linux-puppet.git':
-  require => Exec['/bin/rm -rf /vagrant/git/linux-puppet.git/'],
+exec { '/usr/bin/git init --bare /site/git/linux-puppet.git':
+  user    => 'vagrant',
+  group   => 'vagrant',
+  require => File['/site/git'],
 }
 
 file { 'post-receive':
-  path    => '/vagrant/git/linux-puppet.git/hooks/post-receive',
+  path    => '/site/git/linux-puppet.git/hooks/post-receive',
   source  => 'file:///vagrant/files/post-receive',
   mode    => '0755',
-  require => Exec['/usr/bin/git init --bare /vagrant/git/linux-puppet.git'],
+  require => Exec['/usr/bin/git init --bare /site/git/linux-puppet.git'],
 }
 
 file { 'puppetlabs-dynamic.environments.rb':
-  path    => '/vagrant/git/linux-puppet.git/hooks/puppetlabs-dynamic.environments.rb',
+  path    => '/site/git/linux-puppet.git/hooks/puppetlabs-dynamic.environments.rb',
   source  => 'file:///vagrant/files/puppetlabs-dynamic.environments.rb',
   mode    => '0755',
   require => File['post-receive'],
