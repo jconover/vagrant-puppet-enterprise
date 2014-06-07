@@ -4,9 +4,9 @@ Multihost Vagrant setup for Puppet Enterprise testing
 
 ## What this is ##
 
-First, this is not a Vagrant plugin. It's a Vagrant file and provisioning
-scripts that I use for testing Puppet Enterprise on a Vagrant VirtualBox
-CentOS VM. I put this together to suit my own needs -- if you are not
+First, this is not a Vagrant plugin. It's a Vagrantfile and provisioning
+scripts that I use for testing Puppet Enterprise on Vagrant VirtualBox
+CentOS VMs. I put this together to suit my own needs -- if you are not
 me you may be better off checking out Beaker from Puppet Labs or Finch's
 project called Oscar. That said, if you are using Vagrant and VirtualBox
 and want to give PE a spin, this may work for you.
@@ -16,7 +16,7 @@ and want to give PE a spin, this may work for you.
 The included Vagrantfile spins up a master node and an agent, and installs
 Puppet Enterprise on them both. After typing "vagrant up" and waiting a bit
 (about 15 minutes on my iMac, so enjoy some coffee and a nice walk around
-the block), you should end up with a running Puppet master and an agent
+the block) you should end up with a running Puppet master and an agent
 with a signed cert, all ready to go. There's also an option to configure
 the master to contain a git repo and use dynamic environments, so you
 can push your Puppet git repo there and test your actual code.
@@ -113,7 +113,7 @@ during the PE master install.
 During testing I like to be able to roll back to a clean state, and that
 was difficult with the time involved to rebuild. I'd typically do that 
 with snapshots, but I didn't know of a way to automate that with Vagrant.
-Then I found the vagrant-vbox-snapshot, plugin, but the problem was that
+Then I found the vagrant-vbox-snapshot plugin, but the problem was that
 the commands to interact with it need to be run in the shell, not from one
 of the Vagrant provisioners on the VirtualBox guest. 
 
@@ -127,7 +127,7 @@ reset both the master and the agent back to the snapshots created after
 the agent is provisioned. Rolling back to those snapshots is much faster
 than even doing a "vagrant up" with the VMs both halted. It's really helped
 me in my testing, to be able to quickly get back to that state. Also
-the vagrant-vbox-snapshot plugin luanches the VMs automatically after 
+the vagrant-vbox-snapshot plugin launches the VMs automatically after 
 restoring the snapshot, so you end up with both VMs running again quickly.
 
 Apparently the Puppet Labs team is incorporating support for Docker into
@@ -138,7 +138,7 @@ of my code :)
 ## Contributing ##
 
 I am open to pull requests if you have idea that can improve how this 
-process currently works. Since I build this for myself to use, I won't want
+process currently works. Since I built this for myself to use I won't want
 to pull in anything that will break how I use the tool. I will probably
 be moving to Beaker myself in the near future, if I find it works for 
 my PE testing needs.
